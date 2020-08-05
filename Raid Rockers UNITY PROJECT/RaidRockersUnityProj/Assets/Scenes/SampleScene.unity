@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 172656756}
   m_Layer: 0
   m_Name: WaypointObj (9)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 172656754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 213307261}
   m_Layer: 0
   m_Name: WaypointObj (3)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 213307259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 731400737}
   m_Layer: 0
   m_Name: WaypointObj (14)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 731400735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 749565043}
   m_Layer: 0
   m_Name: WaypointObj (5)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 749565041}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 777357317}
   m_Layer: 0
   m_Name: WaypointObj (10)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -539,7 +539,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 777357315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 798129379}
   m_Layer: 0
   m_Name: WaypointObj (12)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -583,7 +583,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 798129377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -691,29 +691,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 847203342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb9d84db9e4970a42bd32adc8e76e639, type: 3}
+  m_Script: {fileID: 11500000, guid: 16ea9b92560f44f4a988495f3ab15c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   patrolWaiting: 0
   totalWaitTime: 3
   switchProbability: 0.2
-  patrolPoints:
-  - {fileID: 2058754751}
-  - {fileID: 1729702435}
-  - {fileID: 1871167847}
-  - {fileID: 213307261}
-  - {fileID: 1844728368}
-  - {fileID: 749565043}
-  - {fileID: 1245528227}
-  - {fileID: 1950645411}
-  - {fileID: 2129261267}
-  - {fileID: 172656756}
-  - {fileID: 777357317}
-  - {fileID: 1275431699}
-  - {fileID: 798129379}
-  - {fileID: 2101224162}
-  - {fileID: 731400737}
-  - {fileID: 1681957941}
 --- !u!195 &847203348
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1238,7 +1221,7 @@ GameObject:
   - component: {fileID: 1245528227}
   m_Layer: 0
   m_Name: WaypointObj (6)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1266,7 +1249,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1245528225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1282,7 +1265,7 @@ GameObject:
   - component: {fileID: 1275431699}
   m_Layer: 0
   m_Name: WaypointObj (11)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1310,7 +1293,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1275431697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1436,7 +1419,7 @@ GameObject:
   - component: {fileID: 1681957941}
   m_Layer: 0
   m_Name: WaypointObj (15)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1464,7 +1447,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1681957939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1480,7 +1463,7 @@ GameObject:
   - component: {fileID: 1729702435}
   m_Layer: 0
   m_Name: WaypointObj (1)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1508,7 +1491,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1729702433}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1570,7 +1553,7 @@ GameObject:
   - component: {fileID: 1844728368}
   m_Layer: 0
   m_Name: WaypointObj (4)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1598,7 +1581,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844728366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1614,7 +1597,7 @@ GameObject:
   - component: {fileID: 1871167847}
   m_Layer: 0
   m_Name: WaypointObj (2)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1642,7 +1625,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1871167845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1658,7 +1641,7 @@ GameObject:
   - component: {fileID: 1950645411}
   m_Layer: 0
   m_Name: WaypointObj (7)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1686,7 +1669,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1950645409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1702,7 +1685,7 @@ GameObject:
   - component: {fileID: 2058754751}
   m_Layer: 0
   m_Name: WaypointObj
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1730,7 +1713,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2058754749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1746,7 +1729,7 @@ GameObject:
   - component: {fileID: 2101224162}
   m_Layer: 0
   m_Name: WaypointObj (13)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1774,7 +1757,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2101224160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
@@ -1824,7 +1807,7 @@ GameObject:
   - component: {fileID: 2129261267}
   m_Layer: 0
   m_Name: WaypointObj (8)
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1852,7 +1835,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2129261265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a703369791c574246945ff720beb9072, type: 3}
+  m_Script: {fileID: 11500000, guid: 98146262c0b59f848bd03151390d5b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugDrawRadius: 1
