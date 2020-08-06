@@ -64,84 +64,86 @@ public class NPCMove : MonoBehaviour
         }
         else
         {
-            if (patrolPoints != null && patrolPoints.Count != 0)
-            {
-                currPatrolIndex = 0;
-                SetDestination();
-            }
-            else
-            {
-                Debug.Log("Insufficiant amount of patrol points for movement.", gameObject);
-            }
+            //if (patrolPoints != null && patrolPoints.Count != 0)
+            //{
+            //    currPatrolIndex = 0;
+            //    SetDestination();
+            //}
+            //else
+            //{
+            //    Debug.Log("Insufficiant amount of patrol points for movement.", gameObject);
+            //}
+
+            SetDestination();
         }
     }
 
-    private void Update()
-    {
-        //Check if we're close to the destination
-        if (traveling && navMeshAgent.remainingDistance <= 1.0f)
-        {
-            traveling = false;
+    //private void Update()
+    //{
+    //    //Check if we're close to the destination
+    //    if (traveling && navMeshAgent.remainingDistance <= 1.0f)
+    //    {
+    //        traveling = false;
 
-            //If we're going to wait, then wait
-            if (patrolWaiting)
-            {
-                waiting = true;
-                waitTimer = 0;
-            }
-            else
-            {
-                ChangePatrolPoint();
-                SetDestination();
-            }
+    //        //If we're going to wait, then wait
+    //        if (patrolWaiting)
+    //        {
+    //            waiting = true;
+    //            waitTimer = 0;
+    //        }
+    //        else
+    //        {
+    //            ChangePatrolPoint();
+    //            SetDestination();
+    //        }
 
-            //Instead if we're waiting
-            if (waiting)
-            {
-                waitTimer += Time.deltaTime;
-                if (waitTimer >= totalWaitTime)
-                {
-                    waiting = false;
+    //        //Instead if we're waiting
+    //        if (waiting)
+    //        {
+    //            waitTimer += Time.deltaTime;
+    //            if (waitTimer >= totalWaitTime)
+    //            {
+    //                waiting = false;
 
-                    ChangePatrolPoint();
-                    SetDestination();
-                }
-            }
-        }
-    }
+    //                ChangePatrolPoint();
+    //                SetDestination();
+    //            }
+    //        }
+    //    }
+    //}
 
-    /// <summary>
-    /// Selects a ne wpatrol point in the available list, but
-    /// also with a small probability allows for us to move forwards or backwards.
-    /// </summary>
-    private void ChangePatrolPoint()
-    {
-        if (UnityEngine.Random.Range(0f, 1f) <= switchProbability)
-        {
-            patrolForward = !patrolForward;
-        }
+    ///// <summary>
+    ///// Selects a ne wpatrol point in the available list, but
+    ///// also with a small probability allows for us to move forwards or backwards.
+    ///// </summary>
+    //private void ChangePatrolPoint()
+    //{
+    //    if (UnityEngine.Random.Range(0f, 1f) <= switchProbability)
+    //    {
+    //        patrolForward = !patrolForward;
+    //    }
 
-        if (patrolForward)
-        {
-            currPatrolIndex = (currPatrolIndex + 1) % patrolPoints.Count;
-        }
-        else
-        {
-            //The -- before something quickly decrements it.
-            if (--currPatrolIndex < 0)
-            {
-                currPatrolIndex = patrolPoints.Count - 1;
-            }
-        }
-    }
+    //    if (patrolForward)
+    //    {
+    //        currPatrolIndex = (currPatrolIndex + 1) % patrolPoints.Count;
+    //    }
+    //    else
+    //    {
+    //        //The -- before something quickly decrements it.
+    //        if (--currPatrolIndex < 0)
+    //        {
+    //            currPatrolIndex = patrolPoints.Count - 1;
+    //        }
+    //    }
+    //}
 
     private void SetDestination()
     {
         if (patrolPoints != null)
         {
-            Vector3 targetVector = patrolPoints[currPatrolIndex].transform.position;
+            Vector3 targetVector = patrolPoints[0].transform.position;
             navMeshAgent.SetDestination(targetVector);
-            traveling = true;
+            //traveling = true;
         }
     }
 }
