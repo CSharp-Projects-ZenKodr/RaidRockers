@@ -54,7 +54,7 @@ public class SelectableObject : MonoBehaviour
         initialColor = attachedMaterial.color;
     }
 
-    private void OnMouseEnter()
+    public virtual void OnMouseEnter()
     {
         if (!selected)
         {
@@ -62,8 +62,9 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    public virtual void OnMouseDown()
     {
+        //We currently have something selected, and want to select something else that's not this.
         if (currentSelectedObject != null && currentSelectedObject != this)
         {
             //Reset previously selected object
@@ -80,7 +81,7 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
-    private void OnMouseExit()
+    public virtual void OnMouseExit()
     {
         if (!selected)
         {
