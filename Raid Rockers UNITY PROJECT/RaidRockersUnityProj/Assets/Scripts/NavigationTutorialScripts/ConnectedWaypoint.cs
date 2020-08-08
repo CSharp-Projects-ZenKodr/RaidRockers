@@ -18,7 +18,7 @@ public class ConnectedWaypoint : WayPoint {
     /// </summary>
     List<ConnectedWaypoint> connections;
     #endregion
-
+    
     public void Start()
     {
         //Grab all waypoint objects in scene.
