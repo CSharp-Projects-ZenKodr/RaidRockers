@@ -20,11 +20,17 @@ public class PlayableMiner : SelectableObject {
     {
         base.OnMouseDown();
 
+        attachedAgent.isStopped = true;
         selectAfterMouseDown = false;
     }
 
     //Instead of immediately selecting another object, we want to move to where we click
     private void Update()
+    {
+        MinerMovement();
+    }
+
+    void MinerMovement ()
     {
         if (Input.GetMouseButtonDown(0) && selected)
         {
@@ -36,10 +42,10 @@ public class PlayableMiner : SelectableObject {
             {
                 if (hit.collider.gameObject != gameObject)
                 {
-                    Debug.Log("Go");
+                    attachedAgent.isStopped = false;
                     attachedAgent.SetDestination(hit.point);
                     DeselectPreviousObject();
-                    selectAfterMouseDown = true; ;
+                    selectAfterMouseDown = true;
                 }
             }
         }

@@ -60,7 +60,7 @@ public class SelectableObject : MonoBehaviour
 
     public virtual void OnMouseEnter()
     {
-        if (!selected)
+        if (!selected && selectAfterMouseDown)
         {
             attachedMaterial.color += hoverColor; 
         }
