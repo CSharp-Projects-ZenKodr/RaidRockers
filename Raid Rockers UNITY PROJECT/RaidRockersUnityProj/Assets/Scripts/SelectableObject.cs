@@ -18,6 +18,10 @@ public class SelectableObject : MonoBehaviour
     /// The object that is currently selected.
     /// </summary>
     public static SelectableObject currentSelectedObject = null;
+    /// <summary>
+    /// Return true if we should select something after clicking, or false if not.
+    /// </summary>
+    public static bool selectAfterMouseDown = true;
     
     /// <summary>
     /// The material that is on this object.
@@ -64,21 +68,32 @@ public class SelectableObject : MonoBehaviour
 
     public virtual void OnMouseDown()
     {
-        //We currently have something selected, and want to select something else that's not this.
-        if (currentSelectedObject != null && currentSelectedObject != this)
+        if (selectAfterMouseDown)
         {
-            //Reset previously selected object
-            currentSelectedObject.attachedMaterial.color = currentSelectedObject.initialColor;
-            currentSelectedObject.selected = false;
-        }
+            //We currently have something selected, and want to select something else that's not this.
+            if (currentSelectedObject != null && currentSelectedObject != this)
+            {
+                //Reset previously selected object
+                DeselectPreviousObject();
+            }
 
-        if (!selected)
-        {
-            //Make this the currently selected object
-            currentSelectedObject = this;
-            attachedMaterial.color = initialColor + selectedColor;
-            selected = true; 
+            if (!selected)
+            {
+                //Make this the currently selected object
+                currentSelectedObject = this;
+                attachedMaterial.color = initialColor + selectedColor;
+                selected = true;
+            } 
         }
+    }
+
+    /// <summary>
+    /// Deselects the object that was previous selected.
+    /// </summary>
+    public void DeselectPreviousObject()
+    {
+        currentSelectedObject.attachedMaterial.color = currentSelectedObject.initialColor;
+        currentSelectedObject.selected = false;
     }
 
     public virtual void OnMouseExit()

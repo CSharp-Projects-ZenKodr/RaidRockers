@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayableMiner : SelectableObject
-{
+public class PlayableMiner : SelectableObject {
     #region Variables
     /// <summary>
     /// The NavMeshAgent attached to this playable miner.
@@ -12,20 +11,36 @@ public class PlayableMiner : SelectableObject
     NavMeshAgent attachedAgent;
     #endregion
 
-    private void Start ()
+    private void Start()
     {
         attachedAgent = GetComponent<NavMeshAgent>();
+    }
+
+    public override void OnMouseDown()
+    {
+        base.OnMouseDown();
+
+        selectAfterMouseDown = false;
     }
 
     //Instead of immediately selecting another object, we want to move to where we click
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && selected)
         {
-            if (currentSelectedObject != this)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            bool didRayHit = Physics.Raycast(ray, out hit);
+
+            if (didRayHit)
             {
-                Debug.Log("Go");
-                attachedAgent.SetDestination(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                if (hit.collider.gameObject != gameObject)
+                {
+                    Debug.Log("Go");
+                    attachedAgent.SetDestination(hit.point);
+                    DeselectPreviousObject();
+                    selectAfterMouseDown = true; ;
+                }
             }
         }
     }
