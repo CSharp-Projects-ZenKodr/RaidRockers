@@ -7,6 +7,10 @@ public class SelectableObject : MonoBehaviour
 {
     #region Variables
     /// <summary>
+    /// The name of this object that will show up in the UI.
+    /// </summary>
+    public string objectName;
+    /// <summary>
     /// The color of the object when hovered over.
     /// </summary>
     public static Color hoverColor = new Color(0.624f, 0.894f, 0.98f, 1f);
