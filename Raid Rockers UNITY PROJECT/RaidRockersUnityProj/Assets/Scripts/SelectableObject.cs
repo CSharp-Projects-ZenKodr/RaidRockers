@@ -44,6 +44,18 @@ public class SelectableObject : MonoBehaviour
     /// The renderer attached to this object.
     /// </summary>
     private Renderer attachedRenderer;
+    /// <summary>
+    /// The GameObject that holds the cursor data.
+    /// </summary>
+    private GameObject cursorObject;
+    /// <summary>
+    /// The player's cursor.
+    /// </summary>
+    private PlayerCursor cursorScript;
+    /// <summary>
+    /// The animator attached to the player animator.
+    /// </summary>
+    private Animator cursorAnimator;
     #endregion
 
     private void Awake()
@@ -55,6 +67,10 @@ public class SelectableObject : MonoBehaviour
     {
         selected = false;
 
+        //Get player cursor
+        cursorObject = GameObject.FindGameObjectWithTag("Cursor");
+        cursorScript = cursorObject.GetComponent<PlayerCursor>();
+        cursorAnimator = cursorObject.GetComponent<Animator>();
         //Get Material
         attachedRenderer = GetComponent<Renderer>();
         attachedMaterial = attachedRenderer.material;
@@ -66,8 +82,10 @@ public class SelectableObject : MonoBehaviour
     {
         if (!selected && selectAfterMouseDown)
         {
-            attachedMaterial.color += hoverColor; 
+            attachedMaterial.color += hoverColor;
         }
+
+        cursorScript.StartCoroutine(cursorScript.ShowTag(objectName));
     }
 
     public virtual void OnMouseDown()
@@ -89,6 +107,8 @@ public class SelectableObject : MonoBehaviour
                 selected = true;
             } 
         }
+
+        cursorAnimator.SetTrigger("Check");
     }
 
     /// <summary>
@@ -106,5 +126,8 @@ public class SelectableObject : MonoBehaviour
         {
             attachedMaterial.color = initialColor;
         }
+
+        cursorScript.StopAllCoroutines();
+        cursorScript.tagBox.SetActive(false);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//NOTE: Implement moving for mouse cursor
 public class PlayableMiner : SelectableObject {
     #region Variables
     /// <summary>

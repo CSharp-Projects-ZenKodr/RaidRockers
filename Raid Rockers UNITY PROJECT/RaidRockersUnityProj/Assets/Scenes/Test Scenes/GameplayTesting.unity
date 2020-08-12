@@ -10813,7 +10813,7 @@ GameObject:
   - component: {fileID: 1910481143}
   m_Layer: 5
   m_Name: Image_CursorBase
-  m_TagString: Untagged
+  m_TagString: Cursor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10893,6 +10893,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showCursor: 0
+  secondsTilTagShows: 1
+  tagBox: {fileID: 1881647255}
+  tagText: {fileID: 723008804}
 --- !u!95 &1910481143
 Animator:
   serializedVersion: 3
