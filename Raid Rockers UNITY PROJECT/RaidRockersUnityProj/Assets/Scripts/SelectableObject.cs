@@ -7,10 +7,6 @@ public class SelectableObject : MonoBehaviour
 {
     #region Variables
     /// <summary>
-    /// The name of this object that will show up in the UI.
-    /// </summary>
-    public string objectName;
-    /// <summary>
     /// The color of the object when hovered over.
     /// </summary>
     public static Color hoverColor = new Color(0.624f, 0.894f, 0.98f, 1f);
@@ -23,10 +19,18 @@ public class SelectableObject : MonoBehaviour
     /// </summary>
     public static SelectableObject currentSelectedObject = null;
     /// <summary>
+    /// The object that is currently being hovered over.
+    /// </summary>
+    public static SelectableObject currentHoveredObject = null;
+    /// <summary>
     /// Return true if we should select something after clicking, or false if not.
     /// </summary>
     public static bool selectAfterMouseDown = true;
     
+    /// <summary>
+    /// The name of this object that will show up in the UI.
+    /// </summary>
+    public string objectName;
     /// <summary>
     /// The material that is on this object.
     /// </summary>
@@ -39,6 +43,14 @@ public class SelectableObject : MonoBehaviour
     /// Return true if object is selected, or false if not.
     /// </summary>
     public bool selected { get; private set; }
+    /// <summary>
+    /// The player's cursor.
+    /// </summary>
+    public PlayerCursor cursorScript { get; private set; }
+    /// <summary>
+    /// The animator attached to the player animator.
+    /// </summary>
+    public Animator cursorAnimator { get; private set; }
 
     /// <summary>
     /// The renderer attached to this object.
@@ -48,14 +60,6 @@ public class SelectableObject : MonoBehaviour
     /// The GameObject that holds the cursor data.
     /// </summary>
     private GameObject cursorObject;
-    /// <summary>
-    /// The player's cursor.
-    /// </summary>
-    private PlayerCursor cursorScript;
-    /// <summary>
-    /// The animator attached to the player animator.
-    /// </summary>
-    private Animator cursorAnimator;
     #endregion
 
     private void Awake()
@@ -85,6 +89,7 @@ public class SelectableObject : MonoBehaviour
             attachedMaterial.color += hoverColor;
         }
 
+        currentHoveredObject = this;
         cursorScript.StartCoroutine(cursorScript.ShowTag(objectName));
     }
 
