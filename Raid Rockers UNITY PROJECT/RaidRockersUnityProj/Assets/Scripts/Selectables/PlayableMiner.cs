@@ -38,6 +38,7 @@ public class PlayableMiner : SelectableObject {
 
     void MinerMovement ()
     {
+        //Todo: make sure the place we're clicking and moving to is valid (not a wall, on the NavMesh)
         if (Input.GetMouseButtonDown(0) && selected)
         {
             //Moving the miner to a point on the ground that I clicked.
@@ -57,11 +58,16 @@ public class PlayableMiner : SelectableObject {
                     DeselectPreviousObject();
                     selectAfterMouseDown = true;
                     //Tell the cursor the miner was deselected
-                    //TODO: When the player clicks, the check does play, but the cursor overrides it and goes default
                     cursorAnimator.SetTrigger("Check");
                     cursorAnimator.ResetTrigger("Move");
                     aMinerIsSelected = false;
                 }
+            }
+            else
+            {
+                //TODO: When the player clicks, the cross does play, but the cursor overrides it and goes default
+                cursorAnimator.SetTrigger("Cross");
+                cursorAnimator.ResetTrigger("Move");
             }
         }
     }

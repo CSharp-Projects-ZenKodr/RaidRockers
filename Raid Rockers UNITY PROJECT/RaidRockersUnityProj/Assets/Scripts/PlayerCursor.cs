@@ -64,6 +64,7 @@ public class PlayerCursor : MonoBehaviour
             switch (hoverObj.objectName)
             {
                 case "GROUND":
+                    //Note: Might move this to tile later on
                     cursorAnimator.SetTrigger("Move");
                     if (debugMode) Debug.Log(dbm + "1 - Over Ground", gameObject);
                     break;
