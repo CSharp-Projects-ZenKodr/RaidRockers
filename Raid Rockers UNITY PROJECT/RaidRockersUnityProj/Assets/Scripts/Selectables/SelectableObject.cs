@@ -112,8 +112,6 @@ public class SelectableObject : MonoBehaviour
                 selected = true;
             } 
         }
-
-        cursorAnimator.SetTrigger("Check");
     }
 
     /// <summary>
@@ -134,5 +132,7 @@ public class SelectableObject : MonoBehaviour
 
         cursorScript.StopAllCoroutines();
         cursorScript.tagBox.SetActive(false);
+
+        currentHoveredObject = null;
     }
 }

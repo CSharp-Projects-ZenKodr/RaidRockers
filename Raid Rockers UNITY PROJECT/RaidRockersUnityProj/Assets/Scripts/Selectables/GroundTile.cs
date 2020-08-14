@@ -7,5 +7,4 @@ public class GroundTile : SelectableObject
     #region Variables
 
     #endregion
-    
 }

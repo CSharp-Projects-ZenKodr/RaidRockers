@@ -59,12 +59,19 @@ public class PlayerCursor : MonoBehaviour
     {
         SelectableObject hoverObj = SelectableObject.currentHoveredObject;
 
-        if (hoverObj != null && PlayableMiner.aMinerIsSelected)
+        if (hoverObj == null)
+        {
+            cursorAnimator.ResetTrigger("Move");
+            cursorAnimator.SetTrigger("Default");
+            return;
+        }
+
+        //Once a Miner is selected
+        if (PlayableMiner.aMinerIsSelected)
         {
             switch (hoverObj.objectName)
             {
                 case "GROUND":
-                    //Note: Might move this to tile later on
                     cursorAnimator.SetTrigger("Move");
                     if (debugMode) Debug.Log(dbm + "1 - Over Ground", gameObject);
                     break;
@@ -74,6 +81,8 @@ public class PlayerCursor : MonoBehaviour
                     if (debugMode) Debug.Log(dbm + "2 - Over Miner", gameObject);
                     break;
                 default:
+                    cursorAnimator.ResetTrigger("Move");
+                    cursorAnimator.SetTrigger("Default");
                     if (debugMode) Debug.Log(dbm + "3 - Not accounted for", gameObject);
                     break;
             } 

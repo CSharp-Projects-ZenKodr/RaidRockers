@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayableMiner : SelectableObject {
+public class PlayableMiner : SelectableObject
+{
+
     #region Variables
     /// <summary>
     /// Return true if one or more miners are selected, or false if not.
@@ -26,8 +28,13 @@ public class PlayableMiner : SelectableObject {
         base.OnMouseDown();
 
         aMinerIsSelected = true;
+
+        //Stop Miner in place
         attachedAgent.isStopped = true;
+
         selectAfterMouseDown = false;
+
+        cursorAnimator.SetTrigger("Check");
     }
 
     //Instead of immediately selecting another object, we want to move to where we click
@@ -36,10 +43,10 @@ public class PlayableMiner : SelectableObject {
         MinerMovement();
     }
 
-    void MinerMovement ()
+    void MinerMovement()
     {
         //Todo: make sure the place we're clicking and moving to is valid (not a wall, on the NavMesh)
-        if (Input.GetMouseButtonDown(0) && selected)
+        if (Input.GetMouseButtonDown(0) && selected && currentHoveredObject != null && currentHoveredObject.objectName == "GROUND")
         {
             //Moving the miner to a point on the ground that I clicked.
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -57,17 +64,23 @@ public class PlayableMiner : SelectableObject {
                     //Deselect the miner
                     DeselectPreviousObject();
                     selectAfterMouseDown = true;
+                    aMinerIsSelected = false;
                     //Tell the cursor the miner was deselected
                     cursorAnimator.SetTrigger("Check");
                     cursorAnimator.ResetTrigger("Move");
-                    aMinerIsSelected = false;
                 }
             }
             else
             {
                 //TODO: When the player clicks, the cross does play, but the cursor overrides it and goes default
-                cursorAnimator.SetTrigger("Cross");
+                Debug.Log("Don't move");
+                //Deselect the miner
+                DeselectPreviousObject();
+                selectAfterMouseDown = true;
+                aMinerIsSelected = false;
+                //Animate cursor
                 cursorAnimator.ResetTrigger("Move");
+                cursorAnimator.SetTrigger("Cross");
             }
         }
     }
