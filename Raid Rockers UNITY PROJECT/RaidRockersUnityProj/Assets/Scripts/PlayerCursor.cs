@@ -17,6 +17,7 @@ public class PlayerCursor : MonoBehaviour
     /// The amount of seconds that pass until the cursor tag shows.
     /// </summary>
     [Space(8)]
+    [Header("Cursor Tag")]
     public float secondsTilTagShows;
     /// <summary>
     /// The image that represents the cursor tag.
@@ -26,7 +27,14 @@ public class PlayerCursor : MonoBehaviour
     /// The text component that makes up the tag.
     /// </summary>
     public Text tagText;
-    
+    /// <summary>
+    /// The transform that holds our rect for multi-select.
+    /// </summary>
+    [Space(8)]
+    [Header("Multi-selection")]
+    public RectTransform multiSelectRect;
+
+
     /// <summary>
     /// The string that is attached to the debug statements to let me know the cursor is in debug mode.
     /// </summary>
@@ -36,12 +44,17 @@ public class PlayerCursor : MonoBehaviour
     /// The animator attached to this cursor.
     /// </summary>
     private Animator cursorAnimator;
+    /// <summary>
+    /// The starting position of the cursor when we go for a multi-select.
+    /// </summary>
+    private Vector2 cursorSelectStartPos;
     #endregion
 
     private void Awake()
     {
         Cursor.visible = debugMode;
         cursorAnimator = GetComponent<Animator>();
+        transform.SetAsLastSibling();
     }
 
     void Update()
@@ -53,8 +66,95 @@ public class PlayerCursor : MonoBehaviour
 
         //Have the mouse visual react dynamically to hovered object when a miner is selected.
         DynamicMouseOnMinerSelected();
+
+        //Multi-selection
+        MultiSelection();
     }
-    
+
+    /// <summary>
+    /// The function that will handle our mutli-selection.
+    /// </summary>
+    private void MultiSelection()
+    {
+        //mouse down
+        if (Input.GetMouseButtonDown(0))
+        {
+            //Set the start position of mouse
+            cursorSelectStartPos = Input.mousePosition;
+        }
+
+        //mouse up
+        if (Input.GetMouseButtonUp(0))
+        {
+            ReleaseSelectionBox();
+        }
+
+        //mouse held down
+        if (Input.GetMouseButton(0))
+        {
+            //Update the selection box
+            UpdateMultiSelectRect(Input.mousePosition);
+        }
+    }
+
+    /// <summary>
+    /// Updates the multi-selection rect visual
+    /// </summary>
+    /// <param name="currentMousePosition">
+    /// The current position of the mouse cursor
+    /// </param>
+    void UpdateMultiSelectRect (Vector2 currentMousePosition)
+    {
+        //Todo: the box isn't lining up with our cursor quite right.
+        if (!multiSelectRect.gameObject.activeInHierarchy)
+        {
+            multiSelectRect.gameObject.SetActive(true);
+        }
+
+        float width = currentMousePosition.x - cursorSelectStartPos.x;
+        float height = currentMousePosition.y - cursorSelectStartPos.y;
+
+        multiSelectRect.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+        multiSelectRect.anchoredPosition = cursorSelectStartPos + new Vector2(width/2, height/2);
+    }
+
+    /// <summary>
+    /// What happens when we release the selection box.
+    /// </summary>
+    void ReleaseSelectionBox()
+    {
+        //Disable visual
+        multiSelectRect.gameObject.SetActive(false);
+
+        //Get bounds (min/max) of drawn box
+        //Bottom left of selection box.
+        Vector2 min = multiSelectRect.anchoredPosition - (multiSelectRect.sizeDelta / 2);
+        //Top right of selection box.
+        Vector2 max = multiSelectRect.anchoredPosition + (multiSelectRect.sizeDelta / 2);
+
+        //See which units we overlapped by turning their world positions into screen coords
+        //Todo: Switch from example to actual implementation
+        //Example
+        List<PlayableMiner> testMiners = new List<PlayableMiner>();
+
+        foreach (PlayableMiner miner in testMiners)
+        {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(miner.transform.position);
+
+            //is the x position of miner greater than min, but less than max
+            if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
+            {
+                //Todo: select miner properly
+                miner.name = "Selected Miner";
+            }
+        }
+
+        //Todo: Perhaps play check animation if we did this correctly.
+    }
+
+    /// <summary>
+    /// Changes up the cursor visual based on what it's hovered over when a miner is selected.
+    /// </summary>
     private void DynamicMouseOnMinerSelected()
     {
         SelectableObject hoverObj = SelectableObject.currentHoveredObject;

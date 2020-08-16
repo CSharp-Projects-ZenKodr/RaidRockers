@@ -53,8 +53,6 @@ public class PlayableMiner : SelectableObject
         {
             if (currentHoveredObject == null)
             {
-
-                //TODO: When the player clicks, the cross does play, but the cursor overrides it and goes default
                 Debug.Log(name + " will do nothing.", gameObject);
                 DeselectMiner();
                 //Animate cursor
