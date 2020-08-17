@@ -34,6 +34,10 @@ public class PlayerCursor : MonoBehaviour
     [Header("Multi-selection")]
     public RectTransform multiSelectRect;
 
+    /// <summary>
+    /// Return true if the player is attempting to multi-select, or false if not.
+    /// </summary>
+    public bool isMutliSelecting { get; private set; }
 
     /// <summary>
     /// The string that is attached to the debug statements to let me know the cursor is in debug mode.
@@ -48,13 +52,20 @@ public class PlayerCursor : MonoBehaviour
     /// The starting position of the cursor when we go for a multi-select.
     /// </summary>
     private Vector2 cursorSelectStartPos;
+    /// <summary>
+    /// The miners that are in the scene.
+    /// </summary>
+    private List<PlayableMiner> minersInScene;
     #endregion
 
     private void Awake()
     {
         Cursor.visible = debugMode;
         cursorAnimator = GetComponent<Animator>();
+        //Make sure the cursor is above all other UI elements.
         transform.SetAsLastSibling();
+        //Get all the miners in the scene
+        minersInScene = FindObjectsOfType<PlayableMiner>().ToList();
     }
 
     void Update()
@@ -64,11 +75,11 @@ public class PlayerCursor : MonoBehaviour
         //Debug.Log(cursorPos);
         transform.position = Input.mousePosition;
 
-        //Have the mouse visual react dynamically to hovered object when a miner is selected.
-        DynamicMouseOnMinerSelected();
-
         //Multi-selection
         MultiSelection();
+
+        //Have the mouse visual react dynamically to hovered object when a miner is selected.
+        DynamicMouseOnMinerSelected();
     }
 
     /// <summary>
@@ -95,6 +106,26 @@ public class PlayerCursor : MonoBehaviour
             //Update the selection box
             UpdateMultiSelectRect(Input.mousePosition);
         }
+
+        isMutliSelecting = DetermineWhetherPlayerIsMultiSelecting();
+    }
+
+    /// <summary>
+    /// Determines whether the player is multi-selecting or not.
+    /// </summary>
+    /// <returns>
+    /// Is the player multi-selecting?
+    /// </returns>
+    private bool DetermineWhetherPlayerIsMultiSelecting()
+    {
+        bool output = false;
+
+        if (multiSelectRect.sizeDelta.x > float.Epsilon && multiSelectRect.sizeDelta.y > float.Epsilon)
+        {
+            output = true;
+        }
+
+        return output;
     }
 
     /// <summary>
@@ -106,16 +137,17 @@ public class PlayerCursor : MonoBehaviour
     void UpdateMultiSelectRect (Vector2 currentMousePosition)
     {
         //Todo: the box isn't lining up with our cursor quite right.
+        //Note: seems to have something to do with the Canvas being scaled with screen size vs. constant pixel size.
         if (!multiSelectRect.gameObject.activeInHierarchy)
         {
             multiSelectRect.gameObject.SetActive(true);
         }
-
+        
         float width = currentMousePosition.x - cursorSelectStartPos.x;
         float height = currentMousePosition.y - cursorSelectStartPos.y;
 
         multiSelectRect.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
-        multiSelectRect.anchoredPosition = cursorSelectStartPos + new Vector2(width/2, height/2);
+        multiSelectRect.anchoredPosition = cursorSelectStartPos + new Vector2(width / 2, height / 2);
     }
 
     /// <summary>
@@ -125,7 +157,7 @@ public class PlayerCursor : MonoBehaviour
     {
         //Disable visual
         multiSelectRect.gameObject.SetActive(false);
-
+        
         //Get bounds (min/max) of drawn box
         //Bottom left of selection box.
         Vector2 min = multiSelectRect.anchoredPosition - (multiSelectRect.sizeDelta / 2);
@@ -135,21 +167,20 @@ public class PlayerCursor : MonoBehaviour
         //See which units we overlapped by turning their world positions into screen coords
         //Todo: Switch from example to actual implementation
         //Example
-        List<PlayableMiner> testMiners = new List<PlayableMiner>();
-
-        foreach (PlayableMiner miner in testMiners)
+        foreach (PlayableMiner miner in minersInScene)
         {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(miner.transform.position);
+            //Get the position of the miner, and turn it into screen space
+            Vector3 minerScreenPos = Camera.main.WorldToScreenPoint(miner.transform.position);
 
             //is the x position of miner greater than min, but less than max
-            if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
+            if (minerScreenPos.x > min.x && minerScreenPos.x < max.x && minerScreenPos.y > min.y && minerScreenPos.y < max.y)
             {
                 //Todo: select miner properly
                 miner.name = "Selected Miner";
             }
         }
-
-        //Todo: Perhaps play check animation if we did this correctly.
+        
+        cursorAnimator.SetTrigger("Check");
     }
 
     /// <summary>

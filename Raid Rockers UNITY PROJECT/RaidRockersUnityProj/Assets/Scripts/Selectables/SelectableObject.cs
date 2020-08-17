@@ -25,7 +25,7 @@ public class SelectableObject : MonoBehaviour
     /// <summary>
     /// Return true if we should select something after clicking, or false if not.
     /// </summary>
-    public static bool selectAfterMouseDown = true;
+    public static bool selectAfterMouseUp = true;
     
     /// <summary>
     /// The name of this object that will show up in the UI.
@@ -84,7 +84,7 @@ public class SelectableObject : MonoBehaviour
 
     public virtual void OnMouseEnter()
     {
-        if (!selected && selectAfterMouseDown)
+        if (!selected && selectAfterMouseUp)
         {
             attachedMaterial.color += hoverColor;
         }
@@ -92,10 +92,15 @@ public class SelectableObject : MonoBehaviour
         currentHoveredObject = this;
         cursorScript.StartCoroutine(cursorScript.ShowTag(objectName));
     }
-
-    public virtual void OnMouseDown()
+    
+    public virtual void OnMouseUp()
     {
-        if (selectAfterMouseDown)
+        if (cursorScript.isMutliSelecting)
+        {
+            return;
+        }
+
+        if (selectAfterMouseUp)
         {
             //We currently have something selected, and want to select something else that's not this.
             if (currentSelectedObject != null && currentSelectedObject != this)

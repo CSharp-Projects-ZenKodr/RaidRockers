@@ -24,16 +24,16 @@ public class PlayableMiner : SelectableObject
         attachedAgent = GetComponent<NavMeshAgent>();
     }
 
-    public override void OnMouseDown()
+    public override void OnMouseUp()
     {
-        base.OnMouseDown();
+        base.OnMouseUp();
 
         aMinerIsSelected = true;
 
         //Stop Miner in place
         attachedAgent.isStopped = true;
 
-        selectAfterMouseDown = false;
+        selectAfterMouseUp = false;
 
         cursorAnimator.SetTrigger("Check");
     }
@@ -102,7 +102,7 @@ public class PlayableMiner : SelectableObject
                 attachedAgent.SetDestination(hit.point);
                 //Deselect the miner
                 DeselectPreviousObject();
-                selectAfterMouseDown = true;
+                selectAfterMouseUp = true;
                 aMinerIsSelected = false;
                 //Tell the cursor the miner was deselected
                 cursorAnimator.SetTrigger("Check");
@@ -118,7 +118,7 @@ public class PlayableMiner : SelectableObject
     {
         //Deselect the miner
         DeselectPreviousObject();
-        selectAfterMouseDown = true;
+        selectAfterMouseUp = true;
         aMinerIsSelected = false;
     }
 }
