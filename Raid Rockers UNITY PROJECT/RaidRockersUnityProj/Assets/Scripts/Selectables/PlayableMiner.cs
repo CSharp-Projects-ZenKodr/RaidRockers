@@ -28,17 +28,9 @@ public class PlayableMiner : SelectableObject
     {
         base.OnMouseUp();
 
-        aMinerIsSelected = true;
-
-        //Stop Miner in place
-        attachedAgent.isStopped = true;
-
-        selectAfterMouseUp = false;
-
-        cursorAnimator.SetTrigger("Check");
+        SelectMiner(false);
     }
-
-    //Instead of immediately selecting another object, we want to move to where we click
+    
     private void Update()
     {
         InteractWithAClick();
@@ -87,6 +79,8 @@ public class PlayableMiner : SelectableObject
     /// </summary>
     private void MinerMoveCommand()
     {
+        //Instead of immediately selecting another object, we want to move to where we click
+
         //Moving the miner to a point on the ground that I clicked.
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -112,9 +106,47 @@ public class PlayableMiner : SelectableObject
     }
 
     /// <summary>
+    /// Selects the miner.
+    /// </summary>
+    /// <param name="multiselecting">
+    /// Is the miner being multiselected?
+    /// </param>
+    public void SelectMiner(bool multiselecting)
+    {
+        //Todo: have the miner face the camera when selected.
+
+        if (multiselecting)
+        {
+            if (selectAfterMouseUp)
+            {
+                if (!selected)
+                {
+                    if (currentSelectedObjects.Count > 0)
+                    {
+                        //Reset previously selected object
+                        DeselectPreviousObject();
+                    }
+                    
+                    //Make this the currently selected object
+                    //currentSelectedObject = this;
+                    attachedMaterial.color = initialColor + selectedColor;
+                    selected = true;
+                }
+            } 
+        }
+        
+        aMinerIsSelected = true;
+
+        //Stop Miner in place
+        attachedAgent.isStopped = true;
+
+        selectAfterMouseUp = false;
+    }
+
+    /// <summary>
     /// Deselects the miner.
     /// </summary>
-    void DeselectMiner()
+    public void DeselectMiner()
     {
         //Deselect the miner
         DeselectPreviousObject();

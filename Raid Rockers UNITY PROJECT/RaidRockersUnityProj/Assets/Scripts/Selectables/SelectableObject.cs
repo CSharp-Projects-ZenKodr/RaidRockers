@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SelectableObject : MonoBehaviour
@@ -15,9 +16,11 @@ public class SelectableObject : MonoBehaviour
     /// </summary>
     public static Color selectedColor = new Color(0.212f, 0.145f, 1f, 1f);
     /// <summary>
-    /// The object that is currently selected.
+    /// A lost of the objects that are is currently selected.
     /// </summary>
-    public static SelectableObject currentSelectedObject = null;
+    //Todo: Probably going to need to refactor because of the change to a list for this.
+    //Note: Yup
+    public static List<SelectableObject> currentSelectedObjects = new List<SelectableObject>();
     /// <summary>
     /// The object that is currently being hovered over.
     /// </summary>
@@ -26,7 +29,11 @@ public class SelectableObject : MonoBehaviour
     /// Return true if we should select something after clicking, or false if not.
     /// </summary>
     public static bool selectAfterMouseUp = true;
-    
+
+    /// <summary>
+    /// Return true if object is selected, or false if not.
+    /// </summary>
+    public bool selected { get; set; }
     /// <summary>
     /// The name of this object that will show up in the UI.
     /// </summary>
@@ -39,10 +46,6 @@ public class SelectableObject : MonoBehaviour
     /// The initial color of the object.
     /// </summary>
     public Color initialColor { get; private set; }
-    /// <summary>
-    /// Return true if object is selected, or false if not.
-    /// </summary>
-    public bool selected { get; private set; }
     /// <summary>
     /// The player's cursor.
     /// </summary>
@@ -103,7 +106,7 @@ public class SelectableObject : MonoBehaviour
         if (selectAfterMouseUp)
         {
             //We currently have something selected, and want to select something else that's not this.
-            if (currentSelectedObject != null && currentSelectedObject != this)
+            if (currentSelectedObjects.Count > 0  && currentSelectedObjects.First() != this)
             {
                 //Reset previously selected object
                 DeselectPreviousObject();
@@ -112,7 +115,7 @@ public class SelectableObject : MonoBehaviour
             if (!selected)
             {
                 //Make this the currently selected object
-                currentSelectedObject = this;
+                currentSelectedObjects.Add(this);
                 attachedMaterial.color = initialColor + selectedColor;
                 selected = true;
             } 
@@ -124,8 +127,8 @@ public class SelectableObject : MonoBehaviour
     /// </summary>
     public void DeselectPreviousObject()
     {
-        currentSelectedObject.attachedMaterial.color = currentSelectedObject.initialColor;
-        currentSelectedObject.selected = false;
+        currentSelectedObjects.First().attachedMaterial.color = currentSelectedObjects.First().initialColor;
+        currentSelectedObjects.First().selected = false;
     }
 
     public virtual void OnMouseExit()

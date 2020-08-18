@@ -136,8 +136,7 @@ public class PlayerCursor : MonoBehaviour
     /// </param>
     void UpdateMultiSelectRect (Vector2 currentMousePosition)
     {
-        //Todo: the box isn't lining up with our cursor quite right.
-        //Note: seems to have something to do with the Canvas being scaled with screen size vs. constant pixel size.
+        //Note: works only with canvases that are of constant pixel size
         if (!multiSelectRect.gameObject.activeInHierarchy)
         {
             multiSelectRect.gameObject.SetActive(true);
@@ -176,7 +175,7 @@ public class PlayerCursor : MonoBehaviour
             if (minerScreenPos.x > min.x && minerScreenPos.x < max.x && minerScreenPos.y > min.y && minerScreenPos.y < max.y)
             {
                 //Todo: select miner properly
-                miner.name = "Selected Miner";
+                miner.SelectMiner(true);
             }
         }
         
