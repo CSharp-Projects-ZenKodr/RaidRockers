@@ -18,13 +18,12 @@ public class SelectableObject : MonoBehaviour
     /// <summary>
     /// A lost of the objects that are is currently selected.
     /// </summary>
-    //Todo: Probably going to need to refactor because of the change to a list for this.
-    //Note: Yup
     public static List<SelectableObject> currentSelectedObjects = new List<SelectableObject>();
     /// <summary>
     /// The object that is currently being hovered over.
     /// </summary>
     public static SelectableObject currentHoveredObject = null;
+    //Todo: Currently still selecting something on mouse up when we have the miner selected.
     /// <summary>
     /// Return true if we should select something after clicking, or false if not.
     /// </summary>
@@ -70,6 +69,9 @@ public class SelectableObject : MonoBehaviour
         Initialization();
     }
 
+    /// <summary>
+    /// The logic that should run at the start of each instance of this class.
+    /// </summary>
     private void Initialization()
     {
         selected = false;
@@ -100,16 +102,26 @@ public class SelectableObject : MonoBehaviour
     {
         if (cursorScript.isMutliSelecting)
         {
+            //We're multi-selecting
             return;
         }
 
         if (selectAfterMouseUp)
         {
-            //We currently have something selected, and want to select something else that's not this.
-            if (currentSelectedObjects.Count > 0  && currentSelectedObjects.First() != this)
+            //We currently have something selected, and want to select something else that's not this (single select specific).
+            if (currentSelectedObjects.Count > 0)
             {
-                //Reset previously selected object
-                DeselectPreviousObject();
+                if (currentSelectedObjects.Count > 1)
+                {
+                    Debug.LogError("We have more than one object selected.");
+                    return;
+                }
+
+                if (currentSelectedObjects[0] != this)
+                {
+                    //Reset previously selected object
+                    DeselectPreviousObject(); 
+                }
             }
 
             if (!selected)
@@ -120,15 +132,6 @@ public class SelectableObject : MonoBehaviour
                 selected = true;
             } 
         }
-    }
-
-    /// <summary>
-    /// Deselects the object that was previous selected.
-    /// </summary>
-    public void DeselectPreviousObject()
-    {
-        currentSelectedObjects.First().attachedMaterial.color = currentSelectedObjects.First().initialColor;
-        currentSelectedObjects.First().selected = false;
     }
 
     public virtual void OnMouseExit()
@@ -142,5 +145,15 @@ public class SelectableObject : MonoBehaviour
         cursorScript.tagBox.SetActive(false);
 
         currentHoveredObject = null;
+    }
+
+    /// <summary>
+    /// Deselects the object that was previous selected.
+    /// </summary>
+    public void DeselectPreviousObject()
+    {
+        currentSelectedObjects.First().attachedMaterial.color = currentSelectedObjects.First().initialColor;
+        currentSelectedObjects.First().selected = false;
+        currentSelectedObjects.Remove(currentSelectedObjects.First());
     }
 }

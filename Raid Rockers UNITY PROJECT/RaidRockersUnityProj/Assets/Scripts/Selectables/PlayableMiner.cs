@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class PlayableMiner : SelectableObject
 {
-
     #region Variables
     /// <summary>
     /// Return true if one or more miners are selected, or false if not.
@@ -23,17 +22,17 @@ public class PlayableMiner : SelectableObject
     {
         attachedAgent = GetComponent<NavMeshAgent>();
     }
-
+    
+    private void Update()
+    {
+        InteractWithAClick();
+    }
+    
     public override void OnMouseUp()
     {
         base.OnMouseUp();
 
         SelectMiner(false);
-    }
-    
-    private void Update()
-    {
-        InteractWithAClick();
     }
 
     /// <summary>
@@ -59,7 +58,17 @@ public class PlayableMiner : SelectableObject
                     MinerMoveCommand();
                     break;
                 case "MINER":
-                    //Do nothing, maybe play check anim
+                    if (currentHoveredObject != this)
+                    {
+                        //Not this miner, select that other miner!
+                        PlayableMiner otherMiner = currentHoveredObject.GetComponent<PlayableMiner>();
+
+                        Debug.Log("Switch to " + otherMiner.name);
+
+                        otherMiner.SelectMiner(false);
+                        DeselectMiner();
+                    }
+
                     cursorAnimator.ResetTrigger("Move");
                     cursorAnimator.SetTrigger("Check");
                     break;
@@ -114,6 +123,8 @@ public class PlayableMiner : SelectableObject
     public void SelectMiner(bool multiselecting)
     {
         //Todo: have the miner face the camera when selected.
+        //Note: this works pretty good, but I would like their turing to take a little time
+        transform.LookAt(Camera.main.transform);
 
         if (multiselecting)
         {
@@ -144,7 +155,7 @@ public class PlayableMiner : SelectableObject
     }
 
     /// <summary>
-    /// Deselects the miner.
+    /// Deselects the miner, use specifically for miner.
     /// </summary>
     public void DeselectMiner()
     {

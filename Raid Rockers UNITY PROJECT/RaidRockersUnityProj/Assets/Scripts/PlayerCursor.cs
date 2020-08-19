@@ -82,6 +82,7 @@ public class PlayerCursor : MonoBehaviour
         DynamicMouseOnMinerSelected();
     }
 
+    #region Multi-Selecting
     /// <summary>
     /// The function that will handle our mutli-selection.
     /// </summary>
@@ -134,21 +135,21 @@ public class PlayerCursor : MonoBehaviour
     /// <param name="currentMousePosition">
     /// The current position of the mouse cursor
     /// </param>
-    void UpdateMultiSelectRect (Vector2 currentMousePosition)
+    void UpdateMultiSelectRect(Vector2 currentMousePosition)
     {
         //Note: works only with canvases that are of constant pixel size
         if (!multiSelectRect.gameObject.activeInHierarchy)
         {
             multiSelectRect.gameObject.SetActive(true);
         }
-        
+
         float width = currentMousePosition.x - cursorSelectStartPos.x;
         float height = currentMousePosition.y - cursorSelectStartPos.y;
 
         multiSelectRect.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
         multiSelectRect.anchoredPosition = cursorSelectStartPos + new Vector2(width / 2, height / 2);
     }
-
+    
     /// <summary>
     /// What happens when we release the selection box.
     /// </summary>
@@ -156,7 +157,7 @@ public class PlayerCursor : MonoBehaviour
     {
         //Disable visual
         multiSelectRect.gameObject.SetActive(false);
-        
+
         //Get bounds (min/max) of drawn box
         //Bottom left of selection box.
         Vector2 min = multiSelectRect.anchoredPosition - (multiSelectRect.sizeDelta / 2);
@@ -178,9 +179,10 @@ public class PlayerCursor : MonoBehaviour
                 miner.SelectMiner(true);
             }
         }
-        
+
         cursorAnimator.SetTrigger("Check");
     }
+    #endregion
 
     /// <summary>
     /// Changes up the cursor visual based on what it's hovered over when a miner is selected.
