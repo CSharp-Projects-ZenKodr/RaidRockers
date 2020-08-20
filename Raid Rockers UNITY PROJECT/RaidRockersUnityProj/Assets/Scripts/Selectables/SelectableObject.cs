@@ -150,7 +150,7 @@ public class SelectableObject : MonoBehaviour
     /// <summary>
     /// Deselects the object that was previous selected.
     /// </summary>
-    public void DeselectPreviousObject()
+    public virtual void DeselectPreviousObject()
     {
         currentSelectedObjects.First().attachedMaterial.color = currentSelectedObjects.First().initialColor;
         currentSelectedObjects.First().selected = false;

@@ -30,8 +30,6 @@ public class PlayableMiner : SelectableObject
     
     public override void OnMouseUp()
     {
-        base.OnMouseUp();
-
         SelectMiner(false);
     }
 
@@ -45,7 +43,7 @@ public class PlayableMiner : SelectableObject
             if (currentHoveredObject == null)
             {
                 Debug.Log(name + " will do nothing.", gameObject);
-                DeselectMiner();
+                DeselectPreviousObject();
                 //Animate cursor
                 cursorAnimator.ResetTrigger("Move");
                 cursorAnimator.SetTrigger("Cross");
@@ -63,10 +61,8 @@ public class PlayableMiner : SelectableObject
                         //Not this miner, select that other miner!
                         PlayableMiner otherMiner = currentHoveredObject.GetComponent<PlayableMiner>();
 
-                        Debug.Log("Switch to " + otherMiner.name);
-
-                        otherMiner.SelectMiner(false);
-                        DeselectMiner();
+                        otherMiner.SelectMiner(cursorScript.isMutliSelecting);
+                        DeselectPreviousObject();
                     }
 
                     cursorAnimator.ResetTrigger("Move");
@@ -74,7 +70,7 @@ public class PlayableMiner : SelectableObject
                     break;
                 default:
                     Debug.Log(name + " will do nothing.", gameObject);
-                    DeselectMiner();
+                    DeselectPreviousObject();
                     //Animate cursor
                     cursorAnimator.ResetTrigger("Move");
                     cursorAnimator.SetTrigger("Cross");
@@ -105,8 +101,6 @@ public class PlayableMiner : SelectableObject
                 attachedAgent.SetDestination(hit.point);
                 //Deselect the miner
                 DeselectPreviousObject();
-                selectAfterMouseUp = true;
-                aMinerIsSelected = false;
                 //Tell the cursor the miner was deselected
                 cursorAnimator.SetTrigger("Check");
                 cursorAnimator.ResetTrigger("Move");
@@ -126,24 +120,26 @@ public class PlayableMiner : SelectableObject
         //Note: this works pretty good, but I would like their turing to take a little time
         transform.LookAt(Camera.main.transform);
 
+        //If I am multi-selecting
         if (multiselecting)
         {
-            if (selectAfterMouseUp)
+            if (!selected)
             {
-                if (!selected)
+                //If there is one object or more that is currently selected
+                if (currentSelectedObjects.Count > 0)
                 {
-                    if (currentSelectedObjects.Count > 0)
-                    {
-                        //Reset previously selected object
-                        DeselectPreviousObject();
-                    }
-                    
-                    //Make this the currently selected object
-                    //currentSelectedObject = this;
-                    attachedMaterial.color = initialColor + selectedColor;
-                    selected = true;
+                     DeselectPreviousObject();
                 }
-            } 
+
+                //Make this the currently selected object
+                //currentSelectedObject = this;
+                attachedMaterial.color = initialColor + selectedColor;
+                selected = true;
+            }
+        }
+        else
+        {
+            base.OnMouseUp();
         }
         
         aMinerIsSelected = true;
@@ -157,10 +153,11 @@ public class PlayableMiner : SelectableObject
     /// <summary>
     /// Deselects the miner, use specifically for miner.
     /// </summary>
-    public void DeselectMiner()
+    public override void DeselectPreviousObject()
     {
         //Deselect the miner
-        DeselectPreviousObject();
+        base.DeselectPreviousObject();
+        
         selectAfterMouseUp = true;
         aMinerIsSelected = false;
     }
